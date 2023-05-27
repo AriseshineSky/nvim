@@ -172,6 +172,9 @@
 		"--style",
 		"{SPACES_AROUND_POWER_OPERATOR: True, SPACES_BEFORE_COMMENT: 1}"
 	],
+	"solargraph.autoformat": true,
+	"solargraph.formatting": true,
+	"solargraph.hover": true,
 	"html.format.enable": true,
 	"javascript.referencesCodeLens.enable": true,
 	"javascript.showUnused": true,
