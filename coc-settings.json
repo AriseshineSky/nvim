@@ -87,6 +87,7 @@
 		"racket",
 		"prisma",
 		"dart",
+		"ruby",
 		"terraform"
 	],
 	"yaml.format.enable": true,
@@ -173,6 +174,7 @@
 		"{SPACES_AROUND_POWER_OPERATOR: True, SPACES_BEFORE_COMMENT: 1}"
 	],
 	"solargraph.autoformat": true,
+	"solargraph.diagnostics": true,
 	"solargraph.formatting": true,
 	"solargraph.hover": true,
 	"html.format.enable": true,

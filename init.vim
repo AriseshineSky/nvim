@@ -401,6 +401,11 @@ Plug 'pantharshit00/vim-prisma'
 " Go
 Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
+" ruby
+Plug 'ngmy/vim-rubocop'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-endwise'
+
 " Python
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
 Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
@@ -702,6 +707,10 @@ function g:Undotree_CustomMap()
 	nmap <buffer> E 5<plug>UndotreePreviousState
 endfunc
 
+" ==================== vim-rubocop ====================
+let g:vimrubocop_keymap = 0
+nmap <Leader>r :RuboCop<CR>
+let g:vimrubocop_config = $HOME.'/.config/rubocop/config.yml'
 
 " ==================== vim-visual-multi ====================
 "let g:VM_theme             = 'iceblue'
