@@ -40,6 +40,7 @@ set autochdir
 set exrc
 set secure
 set number
+set paste
 set relativenumber
 set cursorline
 set noexpandtab
