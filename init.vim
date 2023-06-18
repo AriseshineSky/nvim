@@ -10,6 +10,9 @@
 " vim-esearch
 " fmoralesc/worldslice
 " SidOfc/mkdx
+" 禁用默认的文件管理器
+let g:loaded_netrwPlugin = 1
+let g:loaded_netrw = 1
 
 
 " ==================== Auto load for first time uses ====================
@@ -554,6 +557,7 @@ let g:coc_global_extensions = [
 	\ 'coc-tsserver',
 	\ 'coc-vetur',
 	\ 'coc-vimlsp',
+	\ 'coc-solargraph',
 	\ 'coc-yaml',
 	\ 'coc-yank']
 inoremap <silent><expr> <TAB>

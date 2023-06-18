@@ -87,6 +87,7 @@
 		"racket",
 		"prisma",
 		"dart",
+		"ruby",
 		"terraform"
 	],
 	"yaml.format.enable": true,
@@ -189,8 +190,12 @@
 	"todolist.promptForReminder": false,
 	"coc-actions.hideCursor": false,
 	"coc-actions.showActionKind": true,
+	"solargraph.diagnostics": true,
+	"solargraph.autoformat": true,
+	"solargraph.formatting": true,
 	"diagnostic-languageserver.filetypes": {
 		"vim": "vint",
+		"ruby": "solargraph",
 		"email": "languagetool",
 		"markdown": ["write-good", "markdownlint"],
 		"sh": "shellcheck",
