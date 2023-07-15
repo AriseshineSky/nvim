@@ -15,7 +15,16 @@ return {
 			}
 		})
 		require("mason-lspconfig").setup({
-			ensure_installed = { "lua_ls", },
+			ensure_installed = {
+				"lua_ls",
+				"solargraph",
+				"yamlls",
+				"tsserver",
+				"bashls",
+				"cssls",
+				"html",
+				"jsonls",
+				"pyright", },
 			automatic_installation = true,
 		})
 	end

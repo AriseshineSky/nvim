@@ -55,6 +55,7 @@ require("lazy").setup({
 	require("config.plugins.git"),
 	require("config.plugins.indent"),
 	require("config.plugins.search"),
+	require("config.plugins.tree"),
 	require("config.plugins.yank"),
 	require("config.plugins.snippets"),
 	require("config.plugins.window-management"),
@@ -64,6 +65,7 @@ require("lazy").setup({
 	require("config.plugins.winbar"),
 	require("config.plugins.leap"),
 	{ "dstein64/vim-startuptime" },
+	{ "tpope/vim-endwise" },
 }, {
 })
 

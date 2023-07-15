@@ -29,6 +29,7 @@ local nmappings = {
 	{ from = "ck",            to = "ci", },
 	{ from = "c,.",           to = "c%", },
 	{ from = "yh",            to = "ye", },
+	{ from = "yk",            to = "yi", },
 
 	-- Actions
 	{ from = "l",             to = "u" },
@@ -82,6 +83,8 @@ local nmappings = {
 	{ from = ",v",            to = "v%" },
 	{ from = "<leader><esc>", to = "<nop>" },
 
+	-- nvim tree
+	{ from = "tt",            to = ":NvimTreeToggle<CR>" },
 	-- Joshuto
 	{ from = "R",             to = ":Joshuto<CR>" },
 }
