@@ -54,6 +54,7 @@ require("lazy").setup({
 	require("config.plugins.markdown"),
 	require("config.plugins.git"),
 	require("config.plugins.indent"),
+	require("config.plugins.ranger"),
 	require("config.plugins.search"),
 	require("config.plugins.tree"),
 	require("config.plugins.yank"),

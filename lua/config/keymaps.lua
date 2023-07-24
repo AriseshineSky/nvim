@@ -85,8 +85,6 @@ local nmappings = {
 
 	-- nvim tree
 	{ from = "tt",            to = ":NvimTreeToggle<CR>" },
-	-- Joshuto
-	{ from = "R",             to = ":Joshuto<CR>" },
 }
 
 for _, mapping in ipairs(nmappings) do
