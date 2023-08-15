@@ -84,7 +84,7 @@ local nmappings = {
 	{ from = "<leader><esc>", to = "<nop>" },
 
 	-- nvim tree
-	{ from = "tt",            to = ":NvimTreeToggle<CR>" },
+	-- { from = "tt",            to = ":NvimTreeToggle<CR>" },
 }
 
 for _, mapping in ipairs(nmappings) do

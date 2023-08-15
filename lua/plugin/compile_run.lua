@@ -1,11 +1,9 @@
 local compileRun = function()
 	vim.cmd("w")
-	-- check file type
+	-- 检查文件类型
 	local ft = vim.bo.filetype
-	if ft == "dart" then
-		vim.cmd(":FlutterRun -d " .. vim.g.flutter_default_device .. " " .. vim.g.flutter_run_args .. "<CR>")
-	elseif ft == "markdown" then
-		vim.cmd(":InstantMarkdownPreview<CR>")
+	if ft == "markdown" then
+		vim.cmd(":InstantMarkdownPreview")
 	end
 end
 
