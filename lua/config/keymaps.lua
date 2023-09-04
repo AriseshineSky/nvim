@@ -82,7 +82,6 @@ local nmappings = {
 	{ from = "<leader>rv",    to = ":e .vim.lua<CR>" },
 	{ from = ",v",            to = "v%" },
 	{ from = "<leader><esc>", to = "<nop>" },
-
 	-- nvim tree
 	-- { from = "tt",            to = ":NvimTreeToggle<CR>" },
 }

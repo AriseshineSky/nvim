@@ -49,13 +49,6 @@ M.config = {
 			local lsp = require('lsp-zero').preset({})
 			M.lsp = lsp
 
-			lsp.ensure_installed({
-				'tsserver',
-				'eslint',
-				'gopls',
-				'jsonls',
-			})
-
 			-- F.configureInlayHints()
 
 			lsp.on_attach(function(client, bufnr)
@@ -131,7 +124,6 @@ M.config = {
 			F.configureKeybinds()
 
 			local format_on_save_filetypes = {
-				dart = true,
 				json = true,
 				go = true,
 				lua = true,

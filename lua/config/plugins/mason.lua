@@ -24,7 +24,11 @@ return {
 				"cssls",
 				"html",
 				"jsonls",
-				"pyright", },
+				"pyright",
+				"clangd",
+				"hls",
+				"intelephense"
+			},
 			automatic_installation = true,
 		})
 	end
