@@ -65,6 +65,7 @@ require("lazy").setup({
 	require("config.plugins.fun"),
 	require("config.plugins.winbar"),
 	require("config.plugins.leap"),
+	require("config.plugins.nvim-puppeteer"),
 	{ "dstein64/vim-startuptime" },
 	{ "tpope/vim-endwise" },
 }, {
