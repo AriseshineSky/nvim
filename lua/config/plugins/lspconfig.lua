@@ -107,6 +107,7 @@ M.config = {
 			require("config.lsp.json").setup(lspconfig, lsp)
 			require("config.lsp.php").setup(lspconfig, lsp)
 			require("config.lsp.html").setup(lspconfig, lsp)
+			require("config.lsp.ts").setup(lspconfig, lsp)
 
 			lsp.setup()
 			require("fidget").setup({})
