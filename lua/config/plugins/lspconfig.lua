@@ -103,11 +103,13 @@ M.config = {
 
 			local lspconfig = require('lspconfig')
 
+			require("config.lsp.c").setup(lspconfig, lsp)
 			require("config.lsp.lua").setup(lspconfig, lsp)
 			require("config.lsp.json").setup(lspconfig, lsp)
 			require("config.lsp.php").setup(lspconfig, lsp)
 			require("config.lsp.html").setup(lspconfig, lsp)
 			require("config.lsp.ts").setup(lspconfig, lsp)
+			require("config.lsp.yaml").setup(lspconfig, lsp)
 
 			lsp.setup()
 			require("fidget").setup({})
@@ -125,9 +127,14 @@ M.config = {
 			F.configureKeybinds()
 
 			local format_on_save_filetypes = {
+				python = true,
 				json = true,
 				go = true,
 				lua = true,
+				ts = true,
+				javascript = true,
+				c = true,
+				yaml = true,
 			}
 
 			vim.api.nvim_create_autocmd("BufWritePre", {
