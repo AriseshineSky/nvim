@@ -39,7 +39,6 @@ M.config = {
 			},
 			"folke/neodev.nvim",
 			"ray-x/lsp_signature.nvim",
-			"ldelossa/nvim-dap-projects",
 			"airblade/vim-rooter",
 			"b0o/schemastore.nvim",
 		},
@@ -57,10 +56,8 @@ M.config = {
 					'jsonls',
 					'html',
 					'clangd',
-					'ansiblels',
 					'ruff',
 					'yamlls',
-					'tailwindcss',
 					'emmet_language_server'
 				}
 			})
@@ -116,9 +113,7 @@ M.config = {
 			require("config.lsp.pyright").setup(lspconfig, lsp)
 			require("config.lsp.ts_ls").setup(lspconfig, lsp)
 
-			require 'lspconfig'.tailwindcss.setup {}
 			require 'lspconfig'.cssls.setup {}
-			require 'lspconfig'.ansiblels.setup {}
 
 			vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 				pattern = { "*.hcl" },
@@ -192,8 +187,6 @@ M.config = {
 				lsp_defaults.capabilities,
 				require('cmp_nvim_lsp').default_capabilities()
 			)
-
-			-- require('nvim-dap-projects').search_project_config()
 
 			F.configureDocAndSignature()
 			F.configureKeybinds()

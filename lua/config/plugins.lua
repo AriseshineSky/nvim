@@ -48,16 +48,15 @@ require("lazy").setup({
 	require("config.plugins.project"),
 	require("config.plugins.wilder"),
 	require("config.plugins.multi-cursor"),
-	require("config.plugins.markdown"),
 	require("config.plugins.rails"),
 	require("config.plugins.git"),
 	require("config.plugins.indent"),
 	require("config.plugins.search"),
 	require("config.plugins.yank"),
-	require("config.plugins.snippets"),
+	-- require("config.plugins.snippets"),
 	require("config.plugins.window-management"),
-	require("config.plugins.undo"),
-	require("config.plugins.fun"),
+	-- require("config.plugins.undo"),
+	-- require("config.plugins.fun"),
 	require("config.plugins.winbar"),
 	require("config.plugins.leap"),
 	require("config.plugins.yazi"),
@@ -67,6 +66,4 @@ require("lazy").setup({
 })
 
 require("plugin.vertical_cursor_movement")
-
-
 require("plugin.compile_run")
