@@ -108,6 +108,7 @@ M.config = {
 			require("config.lsp.json").setup(lspconfig, lsp)
 			require("config.lsp.html").setup(lspconfig, lsp)
 			require("config.lsp.ruby").setup(lspconfig, lsp)
+			require("config.lsp.c").setup(lspconfig, lsp)
 			require("config.lsp.emmet").setup(lspconfig, lsp)
 			require("config.lsp.ruff").setup(lspconfig, lsp)
 			require("config.lsp.pyright").setup(lspconfig, lsp)
