@@ -19,5 +19,8 @@ return {
 
 		-- 设置 LSP 窗口背景颜色（如果需要）
 		vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#2c313c" })
+
+		vim.api.nvim_set_hl(0, "WinBar", { bg = "NONE", fg = "#c0caf5" }) -- 前景色根据主题改
+		vim.api.nvim_set_hl(0, "WinBarNC", { bg = "NONE", fg = "#565f89" })
 	end,
 }
