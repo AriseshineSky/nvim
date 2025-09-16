@@ -48,19 +48,22 @@ M.config = {
 			M.lsp = lsp
 
 			require('mason').setup({})
-			require('mason-lspconfig').setup({
-				ensure_installed = {
-					"cssls",
-					'ts_ls',
-					'eslint',
-					'jsonls',
-					'html',
-					'clangd',
-					'ruff',
-					'yamlls',
-					'emmet_language_server'
-				}
-			})
+
+			-- require('mason-lspconfig').setup({
+			-- 	ensure_installed = {
+			-- 		"cssls",
+			-- 		'ts_ls',
+			-- 		'eslint',
+			-- 		'jsonls',
+			-- 		'html',
+			-- 		'clangd',
+			-- 		'ruff',
+			-- 		'yamlls',
+			-- 		'emmet_language_server',
+			-- 		'solargraph'
+			-- 	},
+			-- })
+
 
 			lsp.on_attach(function(client, bufnr)
 				if client.name == "ts_ls" and vim.bo[bufnr].filetype ~= "javascript" then

@@ -46,7 +46,7 @@ end
 local M = {}
 M.config = {
 	"hrsh7th/nvim-cmp",
-	after = "SirVer/ultisnips",
+	-- after = "SirVer/ultisnips",
 	dependencies = {
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
