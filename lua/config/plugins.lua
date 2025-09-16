@@ -53,6 +53,7 @@ require("lazy").setup({
 	require("config.plugins.indent"),
 	require("config.plugins.search"),
 	require("config.plugins.yank"),
+	require("config.plugins.markdown"),
 	-- require("config.plugins.snippets"),
 	require("config.plugins.window-management"),
 	-- require("config.plugins.undo"),
