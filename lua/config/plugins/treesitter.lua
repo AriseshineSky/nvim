@@ -18,8 +18,6 @@ return {
 					"typescript",
 					"tsx",
 					"query",
-					"dart",
-					"java",
 					"c",
 					"prisma",
 					"bash",
@@ -36,8 +34,8 @@ return {
 				highlight = {
 					enable = true,
 					disable = function(lang, bufnr)
-						local filename = vim.api.nvim_buf_get_name(bufnr)
-						return lang == "c" or filename:match("%.h$")
+						-- local filename = vim.api.nvim_buf_get_name(bufnr)
+						-- return lang == "c" or filename:match("%.h$")
 					end,
 				},
 				indent = {
