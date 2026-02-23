@@ -1,6 +1,7 @@
 return {
-	setup = function(lspconfig, lsp)
-		lspconfig.html.setup({
-		})
-	end
+  setup = function()
+    -- html
+    vim.lsp.config("html", {})
+    vim.lsp.enable("html")
+  end,
 }

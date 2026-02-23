@@ -1,5 +1,6 @@
 return {
-	setup = function(lspconfig, lsp)
-		lspconfig.clangd.setup({})
-	end
+  setup = function()
+    vim.lsp.config("clangd", {})
+    vim.lsp.enable("clangd")
+  end,
 }

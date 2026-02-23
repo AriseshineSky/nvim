@@ -1,18 +1,20 @@
 return {
-	setup = function(lspconfig, lsp)
-		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities.offsetEncoding = { "utf-16" }
-
-		lspconfig.solargraph.setup({
-			cmd = { "solargraph", "stdio" },
-			settings = {
-				solargraph = {
-					formatting = true,
-					diagnostics = true
-				}
-			},
-			filetypes = { 'ruby' },
-			root_dir = lspconfig.util.root_pattern("Gemfile", ".git", ".ruby-version", "config/application.rb"),
-		})
-	end
+  setup = function()
+    -- solargraph (Ruby)
+    vim.lsp.config("solargraph", {
+      cmd = { "solargraph", "stdio" },
+      settings = {
+        solargraph = {
+          formatting = true,
+          diagnostics = true,
+        },
+      },
+      filetypes = { "ruby" },
+      root_dir = vim.lsp.config.util.root_pattern("Gemfile", ".git", ".ruby-version", "config/application.rb"),
+      capabilities = {
+        offsetEncoding = { "utf-16" }
+      }
+    })
+    vim.lsp.enable("solargraph")
+  end,
 }

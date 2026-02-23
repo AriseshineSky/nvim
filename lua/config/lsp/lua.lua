@@ -1,29 +1,30 @@
 return {
-	setup = function(lspconfig, lsp)
+	setup = function()
 		require("neodev").setup({
 			lspconfig = true,
 			override = function()
-			end
+			end,
 		})
-		lspconfig.lua_ls.setup({
+
+		vim.lsp.config("lua_ls", {
 			on_attach = function()
 			end,
 			settings = {
 				Lua = {
 					diagnostics = {
 						globals = {
-							'vim',
-							'require'
+							"vim",
+							"require",
 						},
 					},
 					workspace = {
 						checkThirdParty = false,
 					},
 					completion = {
-						callSnippet = "Replace"
-					}
-				}
-			}
+						callSnippet = "Replace",
+					},
+				},
+			},
 		})
-	end
+	end,
 }

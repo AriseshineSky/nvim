@@ -116,6 +116,7 @@ M.config = {
 			require("config.lsp.ruff").setup(lspconfig, lsp)
 			require("config.lsp.pyright").setup(lspconfig, lsp)
 			require("config.lsp.ts_ls").setup(lspconfig, lsp)
+			require("config.lsp.terraformls").setup(lspconfig, lsp)
 
 			require 'lspconfig'.cssls.setup {}
 

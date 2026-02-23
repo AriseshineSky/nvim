@@ -62,13 +62,13 @@ M.config = {
 				require("lspkind").init()
 			end
 		},
-		{
-			"quangnguyen30192/cmp-nvim-ultisnips",
-			config = function()
-				-- optional call to setup (see customization section)
-				require("cmp_nvim_ultisnips").setup {}
-			end,
-		}
+		-- {
+		-- 	"quangnguyen30192/cmp-nvim-ultisnips",
+		-- 	config = function()
+		-- 		-- optional call to setup (see customization section)
+		-- 		-- require("cmp_nvim_ultisnips").setup {}
+		-- 	end,
+		-- }
 		-- "L3MON4D3/LuaSnip",
 	},
 }
@@ -133,7 +133,7 @@ M.configfunc = function()
 	local lspkind = require("lspkind")
 	vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 	local cmp = require("cmp")
-	local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
+	-- local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
 	-- local luasnip = require("luasnip")
 
 	setCompHL()
@@ -142,7 +142,7 @@ M.configfunc = function()
 		snippet = {
 			expand = function(args)
 				-- luasnip.lsp_expand(args.body)
-				vim.fn["UltiSnips#Anon"](args.body)
+				-- vim.fn["UltiSnips#Anon"](args.body)
 			end,
 		},
 		window = {
@@ -194,13 +194,13 @@ M.configfunc = function()
 			['<C-o>'] = cmp.mapping.complete(),
 			["<c-e>"] = cmp.mapping(
 				function()
-					cmp_ultisnips_mappings.compose { "expand", "jump_forwards" } (function() end)
+					-- cmp_ultisnips_mappings.compose { "expand", "jump_forwards" } (function() end)
 				end,
 				{ "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
 			),
 			["<c-n>"] = cmp.mapping(
 				function(fallback)
-					cmp_ultisnips_mappings.jump_backwards(fallback)
+					-- cmp_ultisnips_mappings.jump_backwards(fallback)
 				end,
 				{ "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
 			),
