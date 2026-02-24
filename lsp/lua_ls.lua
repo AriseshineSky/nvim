@@ -1,10 +1,3 @@
-require("neodev").setup({
-    lspconfig = true, -- automatically integrates with lua_ls
-    override = function()
-        -- you can override settings here if needed
-    end,
-})
-
 return {
     cmd = { "lua-language-server" },  -- make sure your lua_ls binary is correct
     filetypes = { "lua" },
