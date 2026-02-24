@@ -24,14 +24,12 @@ M.config = {
 					},
 				},
 			},
-			{ 'neovim/nvim-lspconfig' },
 			{
 				'williamboman/mason.nvim',
 				build = function()
 					vim.cmd([[MasonInstall]])
 				end,
 			},
-			{ 'williamboman/mason-lspconfig.nvim' },
 			{ 'hrsh7th/cmp-nvim-lsp' },
 			{
 				'j-hui/fidget.nvim',
@@ -105,20 +103,9 @@ M.config = {
 			})
 
 
-			local lspconfig = require('lspconfig')
 
-			require("config.lsp.lua").setup(lspconfig, lsp)
-			require("config.lsp.json").setup(lspconfig, lsp)
-			require("config.lsp.html").setup(lspconfig, lsp)
-			require("config.lsp.ruby").setup(lspconfig, lsp)
-			require("config.lsp.c").setup(lspconfig, lsp)
-			require("config.lsp.emmet").setup(lspconfig, lsp)
-			require("config.lsp.ruff").setup(lspconfig, lsp)
-			require("config.lsp.pyright").setup(lspconfig, lsp)
-			require("config.lsp.ts_ls").setup(lspconfig, lsp)
-			require("config.lsp.terraformls").setup(lspconfig, lsp)
 
-			require 'lspconfig'.cssls.setup {}
+			-- require 'lspconfig'.cssls.setup {}
 
 			vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 				pattern = { "*.hcl" },
@@ -130,43 +117,6 @@ M.config = {
 				end,
 			})
 
-			require 'lspconfig'.yamlls.setup({
-				settings = {
-					redhat = {
-						telemetry = {
-							enabled = false
-						}
-					},
-					yaml = {
-						schemaStore = {
-							enable = false,
-							url = "",
-						},
-						-- schemas = require('schemastore').yaml.schemas(),
-						validate = false,
-						customTags = {
-							"!fn",
-							"!And",
-							"!If",
-							"!Not",
-							"!Equals",
-							"!Or",
-							"!FindInMap sequence",
-							"!Base64",
-							"!Cidr",
-							"!Ref",
-							"!Sub",
-							"!GetAtt",
-							"!GetAZs",
-							"!ImportValue",
-							"!Select",
-							"!Split",
-							"!Join sequence"
-						}
-					},
-				}
-			})
-
 			lsp.setup()
 
 
@@ -176,22 +126,8 @@ M.config = {
 				dynamicRegistration = false,
 				lineFoldingOnly = true
 			}
-			local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
-			for _, ls in ipairs(language_servers) do
-				require('lspconfig')[ls].setup({
-					capabilities = capabilities
-					-- you can add other fields for setting up lsp server in this table
-				})
-			end
 
 			require("fidget").setup({})
-
-			local lsp_defaults = lspconfig.util.default_config
-			lsp_defaults.capabilities = vim.tbl_deep_extend(
-				'force',
-				lsp_defaults.capabilities,
-				require('cmp_nvim_lsp').default_capabilities()
-			)
 
 			F.configureDocAndSignature()
 			F.configureKeybinds()
@@ -312,5 +248,15 @@ F.configureKeybinds = function()
 		end
 	})
 end
+
+vim.lsp.enable("clangd")
+vim.lsp.enable("pyright")
+vim.lsp.enable("yamlls")
+vim.lsp.enable("emmet")
+vim.lsp.enable("jsonls")
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("solargraph")
+vim.lsp.enable("terraformls")
+vim.lsp.enable("ts_ls")
 
 return M
