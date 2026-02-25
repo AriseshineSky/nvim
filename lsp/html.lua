@@ -1,7 +1,5 @@
 return {
-  setup = function()
-    -- html
-    vim.lsp.config("html", {})
-    vim.lsp.enable("html")
-  end,
+  cmd = { "vscode-html-language-server", "--stdio" },
+  filetypes = { "html", "eruby" },
+  root_markers = { ".git", "package.json" },
 }

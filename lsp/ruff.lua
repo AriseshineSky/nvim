@@ -1,10 +1,6 @@
 return {
-  setup = function()
-    -- ruff (Python linter)
-    vim.lsp.config("ruff", {
-      cmd = { vim.g.python3_host_prog, "-m", "ruff", "lsp" },
-      root_dir = vim.lsp.config.util.root_pattern(".git", "pyproject.toml"),
-    })
-    vim.lsp.enable("ruff")
-  end,
+  cmd = { vim.g.python3_host_prog, "-m", "ruff", "server" },
+  filetypes = { "python" },
+  root_markers = { ".git", "pyproject.toml", "setup.py", "requirements.txt" },
+  single_file_support = true,
 }

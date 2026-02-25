@@ -42,6 +42,7 @@ require("lazy").setup({
 	require("config.plugins.tabline"),
 	require("config.plugins.autocomplete").config,
 	require("config.plugins.lspconfig").config,
+	require("config.plugins.mason"),
 	require("config.plugins.treesitter"),
 	require("config.plugins.comment"),
 	require("config.plugins.surround"),

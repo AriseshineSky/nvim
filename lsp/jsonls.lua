@@ -1,11 +1,4 @@
 return {
-  cmd = { "vscode-json-languageserver", "--stdio" },
-  filetypes = { "json", "jsonc" },
-  root_markers = { ".git" },
-  settings = {
-    json = {
-      schemas = {},
-      validate = true,
-    },
-  },
+	cmd = { "vscode-json-language-server", "--stdio" },
+	filetypes = { "json", "jsonc" },
 }
