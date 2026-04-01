@@ -7,7 +7,7 @@ M.config = {
 		-- dir = "/Users/david/.config/nvim/_local_plugins/telescope.nvim",
 		-- tag = '0.1.1',
 		dependencies = {
-			"nvim-tree/nvim-web-devicons",
+			{ "nvim-tree/nvim-web-devicons",              opts = {} },
 			"nvim-lua/plenary.nvim",
 			{
 				"LukasPietzschmann/telescope-tabs",

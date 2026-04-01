@@ -57,7 +57,6 @@ require("lazy").setup({
 	require("config.plugins.markdown"),
 	require("config.plugins.snippets"),
 	require("config.plugins.window-management"),
-	require("config.plugins.markdown"),
 	-- require("config.plugins.undo"),
 	-- require("config.plugins.fun"),
 	require("config.plugins.winbar"),
@@ -65,6 +64,10 @@ require("lazy").setup({
 	require("config.plugins.yazi"),
 	{ "dstein64/vim-startuptime" },
 	{ "RRethy/nvim-treesitter-endwise" },
+	{
+		"Vimjas/vim-python-pep8-indent",
+		ft = "python",
+	}
 }, {
 })
 

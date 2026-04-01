@@ -7,6 +7,7 @@ vim.o.exrc = true
 vim.o.secure = false
 vim.o.number = true
 vim.o.relativenumber = true
+vim.o.signcolumn = 'yes:1'
 vim.o.cursorline = true
 vim.o.expandtab = false
 vim.o.tabstop = 2

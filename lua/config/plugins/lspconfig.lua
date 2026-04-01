@@ -1,15 +1,16 @@
 local M = {}
 
-local function configure_doc_and_signature()
-	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-		vim.lsp.handlers.signature_help,
-		{
-			focusable = false,
-			border = "rounded",
-			zindex = 60,
-		}
-	)
+local signature_help_opts = {
+	focusable = false,
+	border = "rounded",
+	zindex = 60,
+}
 
+local function lsp_signature_help()
+	vim.lsp.buf.signature_help(signature_help_opts)
+end
+
+local function configure_doc_and_signature()
 	local group = vim.api.nvim_create_augroup("lsp_diagnostics_hold", { clear = true })
 	vim.api.nvim_create_autocmd("CursorHold", {
 		pattern = "*",
@@ -55,7 +56,7 @@ local function configure_keybinds()
 			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 			vim.keymap.set("n", "go", vim.lsp.buf.type_definition, opts)
 			vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-			vim.keymap.set("i", "<c-f>", vim.lsp.buf.signature_help, opts)
+			vim.keymap.set("i", "<c-f>", lsp_signature_help, opts)
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 			vim.keymap.set("n", "<leader>aw", vim.lsp.buf.code_action, opts)
 			vim.keymap.set("n", "<leader>,", vim.lsp.buf.code_action, opts)
@@ -144,26 +145,26 @@ local function configure_lsp()
 		end,
 	})
 
-    local servers = {
-        "clangd",
-        "pyright",
+	local servers = {
+		"clangd",
+		"pyright",
 		"yamlls",
 		"emmet",
 		"jsonls",
 		"lua_ls",
 		"solargraph",
-        "terraformls",
-        "ts_ls",
-    }
-    for _, server in ipairs(servers) do
-        local ok, config = pcall(require, "lsp." .. server)
-        if ok and type(config) == "table" then
-            vim.lsp.config(server, config)
-        else
-            vim.lsp.config(server, {})
-        end
-        vim.lsp.enable(server)
-    end
+		"terraformls",
+		"ts_ls",
+	}
+	for _, server in ipairs(servers) do
+		local ok, config = pcall(require, "lsp." .. server)
+		if ok and type(config) == "table" then
+			vim.lsp.config(server, config)
+		else
+			vim.lsp.config(server, {})
+		end
+		vim.lsp.enable(server)
+	end
 end
 
 configure_lsp()

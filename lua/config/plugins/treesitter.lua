@@ -55,6 +55,36 @@ return {
 					},
 				}
 			})
+
+			-- Neovim 0.12 query matches may expose captures as node lists; frozen
+			-- nvim-treesitter `master` directives assume a single TSNode (see #set-lang-from-info-string!).
+			local query = require("vim.treesitter.query")
+			local non_filetype_match_injection_language_aliases = {
+				ex = "elixir",
+				pl = "perl",
+				sh = "bash",
+				uxn = "uxntal",
+				ts = "typescript",
+			}
+			local function get_parser_from_markdown_info_string(injection_alias)
+				local match_ft = vim.filetype.match({ filename = "a." .. injection_alias })
+				return match_ft or non_filetype_match_injection_language_aliases[injection_alias] or injection_alias
+			end
+			query.add_directive("set-lang-from-info-string!", function(match, _, bufnr, pred, metadata)
+				local capture_id = pred[2]
+				local node = match[capture_id]
+				if type(node) == "table" then
+					node = node[1]
+				end
+				if not node then
+					return
+				end
+				local text = vim.treesitter.get_node_text(node, bufnr)
+				if not text then
+					return
+				end
+				metadata["injection.language"] = get_parser_from_markdown_info_string(text:lower())
+			end, { force = true, all = false })
 		end
 	},
 	{
