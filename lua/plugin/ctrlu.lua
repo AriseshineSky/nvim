@@ -3,7 +3,7 @@ local M = {}
 -- Helper function to determine if we should add a semicolon
 local function should_add_semicolon(filetype)
 	local semicolon_filetypes = {
-		"javascript", "typescript", "java", "c", "cpp", "php", "dart"
+		"javascript", "typescript", "java", "c", "cpp"
 	}
 	return vim.tbl_contains(semicolon_filetypes, filetype)
 end
