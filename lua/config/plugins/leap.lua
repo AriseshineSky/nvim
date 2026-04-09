@@ -118,6 +118,14 @@ return {
 			-- 	desc = "Flash",
 			-- },
 			{
+				"<leader>n",
+				mode = { "n", "x" },
+				function()
+					require("flash").jump()
+				end,
+				desc = "Flash jump",
+			},
+			{
 				"tt",
 				mode = { "n", "o", "x" },
 				function()
@@ -139,7 +147,7 @@ return {
 				function()
 					require("flash").jump()
 				end,
-				desc = "Flash Treesitter Search",
+				desc = "Flash jump (operator / visual)",
 			},
 			-- {
 			-- 	"<c-s>",
