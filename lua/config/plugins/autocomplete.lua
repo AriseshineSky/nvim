@@ -181,6 +181,7 @@ M.configfunc = function()
 			end,
 		},
 		sources = cmp.config.sources({
+			{ name = "supermaven" },
 			{ name = "nvim_lsp" },
 			{ name = "buffer" },
 		}, {
