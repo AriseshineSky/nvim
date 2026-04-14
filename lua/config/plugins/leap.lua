@@ -118,7 +118,7 @@ return {
 			-- 	desc = "Flash",
 			-- },
 			{
-				"<leader>n",
+				"<leader>k",
 				mode = { "n", "x" },
 				function()
 					require("flash").jump()
