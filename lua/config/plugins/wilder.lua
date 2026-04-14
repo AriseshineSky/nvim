@@ -1,39 +1,3 @@
--- return {
--- 	'gelguy/wilder.nvim',
--- 	dependencies = {
--- 		"nvim-tree/nvim-web-devicons",
--- 	},
--- 	config = function()
--- 		local wilder = require('wilder')
--- 		wilder.setup {
--- 			modes = { ':' },
--- 			next_key = '<Tab>',
--- 			previous_key = '<S-Tab>',
--- 		}
--- 		wilder.set_option('renderer', wilder.popupmenu_renderer(
--- 			wilder.popupmenu_palette_theme({
--- 				highlights = {
--- 					border = 'Normal', -- highlight to use for the border
--- 				},
--- 				left = { ' ', wilder.popupmenu_devicons() },
--- 				right = { ' ', wilder.popupmenu_scrollbar() },
--- 				border = 'rounded',
--- 				max_height = '75%',  -- max height of the palette
--- 				min_height = 0,      -- set to the same as 'max_height' for a fixed height window
--- 				prompt_position = 'top', -- 'top' or 'bottom' to set the location of the prompt
--- 				reverse = 0,         -- set to 1 to reverse the order of the list, use in combination with 'prompt_position'
--- 			})
--- 		))
--- 		wilder.set_option('pipeline', {
--- 			wilder.branch(
--- 				wilder.cmdline_pipeline({
--- 					language = 'vim',
--- 					fuzzy = 1,
--- 				}), wilder.search_pipeline()
--- 			),
--- 		})
--- 	end
--- }
 return {
 	"folke/noice.nvim",
 	event = "VeryLazy",
@@ -44,4 +8,23 @@ return {
 	opts = {
 		-- 你的配置
 	},
+	config = function()
+		local noice = require('noice')
+		noice.setup {
+			lsp = {
+				override = {
+					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+					["vim.lsp.util.stylize_markdown"] = true,
+					["cmp.entry.get_documentation"] = true,
+				},
+			},
+			presets = {
+				bottom_search = true,                 -- 搜索栏在底部
+				command_palette = true,               -- 命令行在屏幕中间
+				long_message_to_split = true,         -- 长消息自动拆分
+				inc_rename = false,                   -- 是否接管重命名界面
+				lsp_doc_border = false,               -- LSP 文档添加边框
+			},
+		}
+	end
 }
