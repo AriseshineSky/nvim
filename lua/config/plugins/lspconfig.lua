@@ -73,8 +73,50 @@ local function configure_keybinds()
 	})
 end
 
+--- Ruby LSP prints normal progress to stderr; Nvim always logs RPC stderr as [ERROR].
+--- See :h vim.lsp.log (note about "stderr").
+local function is_benign_ruby_lsp_stderr(...)
+	local parts = {}
+	for i = 1, select("#", ...) do
+		parts[#parts + 1] = tostring(select(i, ...) or "")
+	end
+	local blob = table.concat(parts, "\n")
+	if not (blob:find("stderr", 1, true) and blob:find("Ruby LSP", 1, true)) then
+		return false
+	end
+	if blob:find("Error", 1, true) or blob:find("error:", 1, true) or blob:find("failed", 1, true) then
+		return false
+	end
+	return true
+end
+
 local function configure_lsp()
 	vim.lsp.log.set_level(vim.log.levels.WARN)
+
+	local log_levels = vim.log.levels
+	local log_date_format = "%F %H:%M:%S"
+	vim.lsp.log.set_format_func(function(level, ...)
+		if level == "ERROR" and is_benign_ruby_lsp_stderr(...) then
+			return nil
+		end
+		if log_levels[level] < vim.lsp.log.get_level() then
+			return nil
+		end
+		local info = debug.getinfo(2, "Sl")
+		local header = string.format(
+			"[%s][%s] %s:%s",
+			level,
+			os.date(log_date_format),
+			info.short_src,
+			info.currentline
+		)
+		local parts = { header }
+		for i = 1, select("#", ...) do
+			local arg = select(i, ...)
+			table.insert(parts, arg == nil and "nil" or vim.inspect(arg, { newline = " ", indent = "" }))
+		end
+		return table.concat(parts, "\t") .. "\n"
+	end)
 
 	vim.diagnostic.config({
 		severity_sort = true,
