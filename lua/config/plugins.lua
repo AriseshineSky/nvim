@@ -34,6 +34,8 @@ require("lazy").setup({
 	{ "folke/snacks.nvim",             enabled = false },
 	require("config.plugins.telescope").config,
 	require("config.plugins.fzf"),
+	require("config.plugins.lazydev"),
+	require("config.plugins.aerial"),
 	require("config.plugins.colorscheme"),
 	require("config.plugins.notify"),
 	require("config.plugins.blink"),

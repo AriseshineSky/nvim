@@ -1,5 +1,7 @@
 local M = {}
 
+local disable_semantic_tokens = true
+
 local signature_help_opts = {
 	focusable = false,
 	border = "rounded",
@@ -61,13 +63,19 @@ local function configure_keybinds()
 			vim.keymap.set("n", "<leader>aw", vim.lsp.buf.code_action, opts)
 			vim.keymap.set("n", "<leader>,", vim.lsp.buf.code_action, opts)
 			vim.keymap.set("n", "<leader>t", ":Trouble<cr>", opts)
-			vim.keymap.set("n", "<leader>-", vim.diagnostic.goto_prev, opts)
-			vim.keymap.set("n", "<leader>=", vim.diagnostic.goto_next, opts)
+			vim.keymap.set("n", "<leader>-", function()
+				vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
+			end, opts)
+			vim.keymap.set("n", "<leader>=", function()
+				vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
+			end, opts)
 		end,
 	})
 end
 
 local function configure_lsp()
+	vim.lsp.log.set_level(vim.log.levels.WARN)
+
 	vim.diagnostic.config({
 		severity_sort = true,
 		underline = true,
@@ -101,6 +109,10 @@ local function configure_lsp()
 			end
 
 			if client.name == "ts_ls" then
+				client.server_capabilities.semanticTokensProvider = nil
+			end
+
+			if disable_semantic_tokens then
 				client.server_capabilities.semanticTokensProvider = nil
 			end
 		end,
@@ -152,7 +164,7 @@ local function configure_lsp()
 		"emmet",
 		"jsonls",
 		"lua_ls",
-		"solargraph",
+		"ruby-lsp",
 		"terraformls",
 		"ts_ls",
 	}
