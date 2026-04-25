@@ -165,7 +165,6 @@ local function configure_lsp()
 		"jsonls",
 		"lua_ls",
 		"ruby-lsp",
-		"terraformls",
 		"ts_ls",
 	}
 	for _, server in ipairs(servers) do

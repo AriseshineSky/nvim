@@ -28,7 +28,7 @@ return {
 				'emmet_language_server',
 				'solargraph'
 			},
-			automatic_installation = true,
+			automatic_installation = false,
 		})
 	end
 }

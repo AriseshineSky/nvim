@@ -30,10 +30,8 @@ end
 vim.keymap.set("n", "<leader>pl", ":Lazy<CR>", { noremap = true })
 
 require("lazy").setup({
-	require("config.plugins.null"),
 	{ "folke/snacks.nvim",             enabled = false },
 	require("config.plugins.telescope").config,
-	require("config.plugins.fzf"),
 	require("config.plugins.lazydev"),
 	require("config.plugins.aerial"),
 	require("config.plugins.colorscheme"),
@@ -63,7 +61,6 @@ require("lazy").setup({
 	require("config.plugins.winbar"),
 	require("config.plugins.leap"),
 	require("config.plugins.yazi"),
-	{ "dstein64/vim-startuptime" },
 	{ "RRethy/nvim-treesitter-endwise" },
 	{
 		"Vimjas/vim-python-pep8-indent",
