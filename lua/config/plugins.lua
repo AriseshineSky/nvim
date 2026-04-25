@@ -30,7 +30,6 @@ end
 vim.keymap.set("n", "<leader>pl", ":Lazy<CR>", { noremap = true })
 
 require("lazy").setup({
-	{ "folke/snacks.nvim",             enabled = false },
 	require("config.plugins.telescope").config,
 	require("config.plugins.lazydev"),
 	require("config.plugins.aerial"),
@@ -56,8 +55,6 @@ require("lazy").setup({
 	require("config.plugins.yank"),
 	require("config.plugins.markdown"),
 	require("config.plugins.window-management"),
-	-- require("config.plugins.undo"),
-	-- require("config.plugins.fun"),
 	require("config.plugins.winbar"),
 	require("config.plugins.leap"),
 	require("config.plugins.yazi"),
