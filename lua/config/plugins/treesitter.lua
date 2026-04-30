@@ -28,6 +28,9 @@ return {
 				"vim",
 				"terraform",
 				"dockerfile",
+				-- package.json, tsconfig, VS Code settings (jsonc), etc.
+				"json",
+				"jsonc",
 				"yaml",
 				"python",
 				"ruby",
