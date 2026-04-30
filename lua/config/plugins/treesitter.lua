@@ -31,6 +31,8 @@ return {
 				"yaml",
 				"python",
 				"ruby",
+				-- *.erb → filetype eruby；需 embedded_template，仅有 ruby 解析器不会高亮 ERB
+				"embedded_template",
 			}
 
 			-- 必须指定 "parsers"；无参 get_installed 会合并 queries 目录名，误判为已装而跳过 install
