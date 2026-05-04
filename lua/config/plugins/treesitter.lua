@@ -50,7 +50,9 @@ return {
 				end
 			end
 
-			local no_ts_indent = { yaml = true, ruby = true, python = true }
+			-- vim-ruby 的 indentexpr 依赖 syntax；当前 buffer 用 TS 高亮时常常整段失效，换行不缩进。
+			-- Ruby 用 TS indents.scm；yaml / python 仍可按需排除（历史上 TS indent 易有边角问题）。
+			local no_ts_indent = { yaml = true, python = true }
 
 			vim.api.nvim_create_autocmd("FileType", {
 				pattern = "*",

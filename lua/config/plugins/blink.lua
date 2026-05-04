@@ -35,18 +35,13 @@ return {
 			['<C-y>'] = { 'fallback' },
 			['<C-u>'] = { 'fallback' },
 			['<C-f>'] = { 'hide', 'fallback' },
-			['<CR>'] = {
-				function(cmp)
-					if cmp.is_visible() then
-						cmp.accept()
-						return true
-					end
-				end,
-				'fallback',
-			},
+			-- preselect=false 时没有选中项；`accept` 不会插入，`select_and_accept` 会先选第一项再确认（见 :h blink-cmp）
+			['<CR>'] = { 'select_and_accept', 'fallback' },
+			-- 用 is_menu_visible：is_visible 含 ghost text，此时 select_next 的 can_select 为 false，
+			-- 会误判进 has_words_before + show，Tab 被吃掉却既不选下一项也不 fallback 缩进。
 			['<Tab>'] = {
 				function(cmp)
-					if cmp.is_visible() then
+					if cmp.is_menu_visible() then
 						cmp.select_next()
 						return true
 					end
@@ -59,7 +54,7 @@ return {
 			},
 			['<S-Tab>'] = {
 				function(cmp)
-					if cmp.is_visible() then
+					if cmp.is_menu_visible() then
 						cmp.select_prev()
 						return true
 					end
@@ -86,8 +81,8 @@ return {
 					gap = 0,
 					cursorline_priority = 0,
 					columns = {
-						{ 'kind_icon', 'kind' },
-						{ 'label', 'label_description', gap = 1 },
+						{ 'kind_icon',   'kind' },
+						{ 'label',       'label_description', gap = 1 },
 						{ 'source_name', gap = 1 },
 					},
 					components = {
@@ -104,10 +99,12 @@ return {
 				},
 			},
 			documentation = {
-				auto_show = true,
+				auto_show = false,
 				auto_show_delay_ms = 0,
 				window = {
 					border = 'rounded',
+					max_width = 80,
+					max_height = 20,
 					winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,EndOfBuffer:BlinkCmpDoc',
 				},
 			},
