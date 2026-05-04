@@ -9,8 +9,6 @@ return {
 		config = function()
 			vim.opt.smartindent = false
 
-			require("nvim-treesitter").setup()
-
 			local ensure_installed = {
 				"asm",
 				"markdown",
@@ -38,19 +36,14 @@ return {
 				"embedded_template",
 			}
 
-			-- 必须指定 "parsers"；无参 get_installed 会合并 queries 目录名，误判为已装而跳过 install
-			local installed = require("nvim-treesitter").get_installed("parsers")
-			local parsers_to_install = vim.tbl_filter(function(name)
-				return not vim.tbl_contains(installed, name)
-			end, ensure_installed)
-			if #parsers_to_install > 0 then
-				require("nvim-treesitter").install(parsers_to_install)
-			end
+			require("nvim-treesitter").setup({
+				ensure_installed = ensure_installed,
+			})
 
 			-- 不用 Makefile：卸掉 make parser（避免坏掉的 make.so / 不需要 TS 高亮）
 			do
-				local ok, plist = pcall(require("nvim-treesitter").get_installed, "parsers")
-				if ok and vim.tbl_contains(plist, "make") then
+				local has_make_parser = #vim.api.nvim_get_runtime_file("parser/make.*", true) > 0
+				if has_make_parser then
 					pcall(function()
 						require("nvim-treesitter").uninstall("make"):wait(120000)
 					end)
