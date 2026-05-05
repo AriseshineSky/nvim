@@ -23,6 +23,8 @@ return {
 			cycle_open_buffers = '<tab>',
 			copy_relative_path_to_selected_files = '<c-y>',
 			send_to_quickfix_list = '<c-q>',
+			-- Default is <c-o>; that flow requires folke/snacks.nvim (pick_win).
+			open_and_pick_window = false,
 		},
 	},
 }
