@@ -42,8 +42,11 @@ return {
 				default = {
 					embed_image_as_base64 = false,
 					prompt_for_file_name = false,
+					-- img-clip 会包装 vim.paste：在启用 drag_and_drop 时，1～2 行的粘贴会被当成
+					-- 图片路径解析，在 Python 等缓冲区粘贴短代码易误报 “Content is not an image”。
+					-- Avante 输入框由 avante 自己的 vim.paste 处理；需要贴图时用 :PasteImage。
 					drag_and_drop = {
-						insert_mode = true,
+						enabled = false,
 					},
 					-- Windows 用户必需
 					use_absolute_path = true,
