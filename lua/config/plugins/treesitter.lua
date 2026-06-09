@@ -18,6 +18,7 @@ return {
 				"tsx",
 				"query",
 				"c",
+				"cpp",
 				"prisma",
 				"bash",
 				"go",

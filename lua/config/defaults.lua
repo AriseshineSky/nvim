@@ -1,5 +1,6 @@
 vim.o.termguicolors = true
 vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
+vim.o.background = 'dark'
 
 vim.o.ttyfast = true
 vim.o.autochdir = true

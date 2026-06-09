@@ -1,8 +1,3 @@
-local has_words_before = function()
-	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
 return {
 	'saghen/blink.cmp',
 	init = function()
@@ -37,16 +32,13 @@ return {
 			['<C-f>'] = { 'hide', 'fallback' },
 			-- preselect=false 时没有选中项；`accept` 不会插入，`select_and_accept` 会先选第一项再确认（见 :h blink-cmp）
 			['<CR>'] = { 'select_and_accept', 'fallback' },
-			-- 用 is_menu_visible：is_visible 含 ghost text，此时 select_next 的 can_select 为 false，
-			-- 会误判进 has_words_before + show，Tab 被吃掉却既不选下一项也不 fallback 缩进。
+			-- 用 is_menu_visible：is_visible 含 ghost text，此时 select_next 的 can_select 为 false。
+			-- 不要在菜单未打开时用 has_words_before + show 并 return true：会吞掉 Tab，无法 fallback 缩进。
+			-- 补全触发交给 auto_show / <C-o>（show）。
 			['<Tab>'] = {
 				function(cmp)
 					if cmp.is_menu_visible() then
 						cmp.select_next()
-						return true
-					end
-					if has_words_before() then
-						cmp.show()
 						return true
 					end
 				end,
