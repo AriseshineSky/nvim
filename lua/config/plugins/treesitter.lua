@@ -12,6 +12,7 @@ return {
 			local ensure_installed = {
 				"asm",
 				"markdown",
+				"mermaid",
 				"html",
 				"javascript",
 				"typescript",
