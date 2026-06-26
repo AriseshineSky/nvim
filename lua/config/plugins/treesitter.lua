@@ -12,6 +12,7 @@ return {
 			local ensure_installed = {
 				"asm",
 				"markdown",
+				"markdown_inline",
 				"mermaid",
 				"html",
 				"javascript",
@@ -70,35 +71,6 @@ return {
 					end
 				end,
 			})
-
-			-- Neovim 0.12：match 里可能是 node 列表；兼容 markdown fenced info string 注入
-			local query = require("vim.treesitter.query")
-			local non_filetype_match_injection_language_aliases = {
-				ex = "elixir",
-				pl = "perl",
-				sh = "bash",
-				uxn = "uxntal",
-				ts = "typescript",
-			}
-			local function get_parser_from_markdown_info_string(injection_alias)
-				local match_ft = vim.filetype.match({ filename = "a." .. injection_alias })
-				return match_ft or non_filetype_match_injection_language_aliases[injection_alias] or injection_alias
-			end
-			query.add_directive("set-lang-from-info-string!", function(match, _, bufnr, pred, metadata)
-				local capture_id = pred[2]
-				local node = match[capture_id]
-				if type(node) == "table" then
-					node = node[1]
-				end
-				if not node then
-					return
-				end
-				local text = vim.treesitter.get_node_text(node, bufnr)
-				if not text then
-					return
-				end
-				metadata["injection.language"] = get_parser_from_markdown_info_string(text:lower())
-			end, { force = true, all = false })
 
 			-- 旧版 incremental_selection（<C-n> 等）在 main 已移除。Nvim 0.12 内置选区：Visual 下见 :help v_in、:help v_an
 		end,

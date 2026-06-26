@@ -1,14 +1,20 @@
 return {
 	"mg979/vim-visual-multi",
 	init = function()
+		-- Permanent mappings only: buffer-only keys in g:VM_maps trigger E716 at startup
+		-- when the plugin builds global (non-buffer) mappings.
 		vim.cmd([[
 let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
 let g:VM_maps                       = {}
 let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
-let g:VM_maps['i']                  = 'k'
-let g:VM_maps['I']                  = 'K'
 let g:VM_maps['Find Under']         = '<C-k>'
 let g:VM_maps['Find Subword Under'] = '<C-k>'
+]])
+	end,
+	config = function()
+		vim.cmd([[
+let g:VM_maps['i']                  = 'k'
+let g:VM_maps['I']                  = 'K'
 let g:VM_maps['Find Next']          = ''
 let g:VM_maps['Find Prev']          = ''
 let g:VM_maps['Remove Region']      = 'q'
@@ -17,5 +23,5 @@ let g:VM_maps["Undo"]               = 'l'
 let g:VM_maps["Redo"]               = '<C-r>'
 noremap <leader>sa <Plug>(VM-Select-All)
 ]])
-	end
+	end,
 }
