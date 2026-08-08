@@ -43,9 +43,13 @@ local function run_trans(args, title)
 		vim.notify("未找到 translate-shell (trans)，请先安装：yay -S translate-shell", vim.log.levels.ERROR)
 		return
 	end
-	local cmd = { "trans" }
+	local cmd = { "trans", "-no-ansi" }
 	vim.list_extend(cmd, args)
 	local out = vim.fn.systemlist(cmd)
+	-- 兜底：即便 -no-ansi 失效，也把残留的转义码去掉
+	for i, line in ipairs(out) do
+		out[i] = line:gsub("\27%[[0-9;]*m", ""):gsub("%[[0-9;]+m", "")
+	end
 	if vim.v.shell_error ~= 0 or #out == 0 then
 		vim.notify("翻译失败：" .. table.concat(out, " "), vim.log.levels.WARN)
 		return
