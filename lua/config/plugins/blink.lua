@@ -29,7 +29,10 @@ return {
 			['<C-n>'] = { function() return true end },
 			['<C-y>'] = { 'fallback' },
 			['<C-u>'] = { 'fallback' },
-			['<C-f>'] = { 'hide', 'fallback' },
+			-- 签名帮助：只显示参数行（见 signature.window.show_documentation = false）
+			['<C-f>'] = { 'show_signature', 'hide_signature', 'fallback' },
+			-- 仅在补全菜单打开时开关文档；否则 fallback（避免抢走 visual-multi 的 <C-k>）
+			['<C-k>'] = { 'show_documentation', 'hide_documentation', 'fallback' },
 			-- preselect=false 时没有选中项；`accept` 不会插入，`select_and_accept` 会先选第一项再确认（见 :h blink-cmp）
 			['<CR>'] = { 'select_and_accept', 'fallback' },
 			-- 用 is_menu_visible：is_visible 含 ghost text，此时 select_next 的 can_select 为 false。
@@ -65,38 +68,41 @@ return {
 		completion = {
 			menu = {
 				auto_show = true,
+				-- 菜单本身别占太多行
+				max_height = 8,
 				border = 'rounded',
 				winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
 				draw = {
 					align_to = 'label',
-					padding = 0,
-					gap = 0,
+					padding = { 0, 1 },
+					gap = 1,
 					cursorline_priority = 0,
+					-- 只保留图标 + 名称 + 短类型；去掉 kind 文字 / source，减少横向遮挡
 					columns = {
-						{ 'kind_icon',   'kind' },
-						{ 'label',       'label_description', gap = 1 },
-						{ 'source_name', gap = 1 },
+						{ 'kind_icon' },
+						{ 'label', 'label_description', gap = 1 },
 					},
 					components = {
 						label = {
 							ellipsis = true,
+							width = { fill = true, max = 36 },
 						},
 						label_description = {
-							highlight = 'Comment',
-						},
-						source_name = {
+							ellipsis = true,
+							width = { max = 18 },
 							highlight = 'Comment',
 						},
 					},
 				},
 			},
 			documentation = {
+				-- 不自动弹文档；需要看时按 <C-k>，既有提示又不挡输入
 				auto_show = false,
-				auto_show_delay_ms = 0,
+				auto_show_delay_ms = 500,
 				window = {
 					border = 'rounded',
-					max_width = 80,
-					max_height = 20,
+					max_width = 56,
+					max_height = 12,
 					winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,EndOfBuffer:BlinkCmpDoc',
 				},
 			},
@@ -126,7 +132,16 @@ return {
 		-- See the fuzzy documentation for more information
 		fuzzy = { implementation = "prefer_rust_with_warning" },
 
-		signature = { enabled = false },
+		-- 括号内参数提示：自动出一行签名，不附带 RDoc/文档（避免大面积挡代码）
+		signature = {
+			enabled = true,
+			window = {
+				border = 'rounded',
+				max_width = 80,
+				max_height = 4,
+				show_documentation = false,
+			},
+		},
 	},
 	opts_extend = { "sources.default" }
 }

@@ -37,8 +37,8 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.shortmess = vim.o.shortmess .. 'c'
 vim.o.inccommand = 'split'
-vim.o.completeopt = 'longest,noinsert,menuone,noselect,preview'
-vim.o.completeopt = 'menuone,noinsert,noselect,preview'
+-- 不要加 preview：原生补全会把 info/文档开到 preview 窗口，大面积挡代码
+vim.o.completeopt = 'menuone,noinsert,noselect'
 -- vim.o.lazyredraw = true
 vim.o.visualbell = true
 vim.o.colorcolumn = '100'

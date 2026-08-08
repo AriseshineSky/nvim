@@ -2,16 +2,6 @@ local M = {}
 
 local disable_semantic_tokens = true
 
-local signature_help_opts = {
-	focusable = false,
-	border = "rounded",
-	zindex = 60,
-}
-
-local function lsp_signature_help()
-	vim.lsp.buf.signature_help(signature_help_opts)
-end
-
 local function configure_doc_and_signature()
 	local group = vim.api.nvim_create_augroup("lsp_diagnostics_hold", { clear = true })
 	vim.api.nvim_create_autocmd("CursorHold", {
@@ -40,6 +30,8 @@ local function show_documentation()
 	vim.lsp.buf.hover({
 		focusable = false,
 		border = "rounded",
+		max_width = 80,
+		max_height = 20,
 	})
 end
 
@@ -58,7 +50,7 @@ local function configure_keybinds()
 			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 			vim.keymap.set("n", "go", vim.lsp.buf.type_definition, opts)
 			vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-			vim.keymap.set("i", "<c-f>", lsp_signature_help, opts)
+			-- 插入模式签名帮助改由 blink.cmp 处理（只显示参数行，不含长文档）
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 			vim.keymap.set("n", "<leader>aw", vim.lsp.buf.code_action, opts)
 			vim.keymap.set("n", "<leader>,", vim.lsp.buf.code_action, opts)
