@@ -55,6 +55,28 @@ return {
 
 		-- 最终激活主题
 		vim.cmd.colorscheme "catppuccin"
+
+		-- 半透明背景：Normal 系列不涂底色，让 st 的默认背景（alpha≈0.8）透出壁纸。
+		-- 这样 "nvim 区域" 与 "终端留白/tmux 空隙" 同色，避免两截色差（背景不纯净）。
+		-- 透明度由 st 的 alpha 控制，想调去 ~/src/st/config.h。
+		local function transparent()
+			for _, name in ipairs({
+				"Normal", "NormalNC", "SignColumn", "LineNr", "CursorLineNr",
+				"NormalFloat", "FloatBorder",
+				-- 去掉 LSP 提示 / treesitter context / illuminate 的实心底色块
+				"LspDiagnosticsVirtualTextError", "LspDiagnosticsVirtualTextWarning",
+				"LspDiagnosticsVirtualTextInformation", "LspDiagnosticsVirtualTextHint",
+				"TreesitterContext", "TreesitterContextSeparator", "IlluminatedWordText",
+			}) do
+				vim.api.nvim_set_hl(0, name, { bg = "NONE" })
+			end
+		end
+		transparent()
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			callback = function()
+				vim.schedule(transparent)
+			end,
+		})
 	end,
 }
 -- return {
