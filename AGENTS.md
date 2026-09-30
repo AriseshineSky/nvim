@@ -21,7 +21,7 @@ lazy-lock.json                  # 插件版本锁文件，随 git 提交
 
 ## 关键约定
 
-- 键盘映射基于类 Dvorak 布局：`u/e/n/i` 分别映射到 `k/j/h/l`（hjkl）。新增映射时遵守这套布局，不要硬编码标准方向键习惯。
+- 键盘映射基于 Colemak 布局：`u/e/n/i` 分别映射到 `k/j/h/l`（hjkl）。新增映射时遵守这套布局，不要硬编码标准方向键习惯。
 - leader 键是空格（`<leader>` / `<SPC>`），local leader 是逗号（`,`）。
 - 插件配置必须放在 `lua/config/plugins/` 下一个独立文件，并在 `lua/config/plugins.lua` 的 `lazy.setup` require 列表中注册，缺一不可。
 - 新增 LSP 服务器：在顶层 `lsp/<name>.lua` 写配置并按需接入 `lua/config/plugins/lspconfig.lua`。文件名与项目既有风格（如 `ts_ls.lua`）保持一致。

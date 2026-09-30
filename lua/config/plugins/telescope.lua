@@ -68,7 +68,7 @@ M.config = {
 			}
 			-- vim.keymap.set('n', 'gd', builtin.lsp_definitions, m)
 			-- vim.keymap.set('n', '<c-t>', builtin.lsp_document_symbols, {})
-			vim.keymap.set('n', 'gi', builtin.git_status, m)
+			vim.keymap.set('n', '<leader>gs', builtin.git_status, m)
 			vim.keymap.set("n", ":", builtin.commands, m)
 
 			local trouble = require("trouble.providers.telescope")

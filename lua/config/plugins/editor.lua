@@ -65,7 +65,6 @@ return {
 			buftypes = {},
 		}
 	},
-	{ 'theniceboy/antovim', lazy = false, },
 	{ 'gcmt/wildfire.vim',  lazy = false, },
 	-- {
 	-- 	"fedepujol/move.nvim",

@@ -59,7 +59,7 @@ local function configure_keybinds()
 				vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
 			end, opts)
 			vim.keymap.set("n", "<leader>=", function()
-				vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
+				vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
 			end, opts)
 		end,
 	})

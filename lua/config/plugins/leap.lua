@@ -126,12 +126,20 @@ return {
 				desc = "Flash jump",
 			},
 			{
-				"tt",
+				"gs",
 				mode = { "n", "o", "x" },
 				function()
 					require("flash").treesitter()
 				end,
 				desc = "Flash Treesitter",
+			},
+			{
+				"gS",
+				mode = { "n", "o", "x" },
+				function()
+					require("flash").treesitter_search()
+				end,
+				desc = "Flash Treesitter search (all windows)",
 			},
 			-- {
 			-- 	"r",
