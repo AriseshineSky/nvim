@@ -58,7 +58,6 @@ require("lazy").setup({
 	require("config.plugins.winbar"),
 	require("config.plugins.leap"),
 	require("config.plugins.yazi"),
-	require("config.plugins.minuet"),
 	{ "RRethy/nvim-treesitter-endwise" },
 	{
 		"Vimjas/vim-python-pep8-indent",

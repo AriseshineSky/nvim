@@ -12,6 +12,12 @@ return {
 		local noice = require('noice')
 		noice.setup {
 			lsp = {
+				-- 签名帮助统一交给 blink.cmp（小窗口、show_documentation=false）。
+				-- noice 默认会接管 vim.lsp.buf.signature_help 并在输入触发字符时自动弹出
+				-- hover 视图（max_height=20，且带 LSP 完整文档），与 blink 的签名窗口重叠、
+				-- 大面积遮挡代码，导致无法正常输入方法参数，因此关闭。
+				-- 需要手动查看时用 blink 的 <C-f>（show_signature）。
+				signature = { enabled = false },
 			},
 			presets = {
 				bottom_search = true,     -- 搜索栏在底部

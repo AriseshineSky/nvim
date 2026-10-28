@@ -162,18 +162,79 @@ local function configure_lsp()
 		typescriptreact = true,
 		toml = true,
 	}
+	-- 保存时格式化必须异步。vim.lsp.buf.format({ async = false }) 内部是
+	-- request_sync(..., 1000)，只要格式化服务器慢（实测 235KB 的 JSON 用
+	-- jsonls 格式化要 ~600ms，慢服务器会直接撞 1000ms 超时），整个
+	-- BufWritePre 被阻塞，保存体感就是“卡 1 秒”。
+	-- 这里改为异步请求，格式化完成后再静默写回一次。
+	local formatting_bufs = {}
+	-- 服务器一直不回应时，别让守卫永久卡住这个 buffer
+	local function reset_formatting_guard(bufnr, delay)
+		local timer = vim.uv.new_timer()
+		timer:start(delay, 0, vim.schedule_wrap(function()
+			timer:stop()
+			timer:close()
+			formatting_bufs[bufnr] = nil
+		end))
+	end
+
 	vim.api.nvim_create_autocmd("BufWritePre", {
 		pattern = "*",
-		callback = function()
-			if format_on_save_filetypes[vim.bo.filetype] then
-				local lineno = vim.api.nvim_win_get_cursor(0)
-				vim.lsp.buf.format({
-					async = false,
-					filter = function(client)
-						return client.name ~= "ts_ls"
-					end,
-				})
-				pcall(vim.api.nvim_win_set_cursor, 0, lineno)
+		callback = function(args)
+			local bufnr = args.buf
+			if not format_on_save_filetypes[vim.bo[bufnr].filetype] then
+				return
+			end
+			if formatting_bufs[bufnr] then
+				return
+			end
+
+			local clients = vim.lsp.get_clients({
+				bufnr = bufnr,
+				method = "textDocument/formatting",
+			})
+			clients = vim.tbl_filter(function(client)
+				return client.name ~= "ts_ls"
+			end, clients)
+			if #clients == 0 then
+				return
+			end
+
+			local win = vim.fn.bufwinid(bufnr)
+			local cursor = win ~= -1 and vim.api.nvim_win_get_cursor(win) or nil
+			formatting_bufs[bufnr] = true
+			reset_formatting_guard(bufnr, 10000)
+
+			local pending = #clients
+			local function finish()
+				pending = pending - 1
+				if pending > 0 then
+					return
+				end
+				if not vim.api.nvim_buf_is_valid(bufnr) then
+					formatting_bufs[bufnr] = nil
+					return
+				end
+				if cursor and vim.api.nvim_win_is_valid(win) then
+					pcall(vim.api.nvim_win_set_cursor, win, cursor)
+				end
+				-- 格式化结果只在缓冲区里，需要再落盘一次。保持守卫为 true，
+				-- 避免这次写入再次进入本回调造成死循环。
+				if vim.bo[bufnr].modified and vim.bo[bufnr].buftype == "" then
+					vim.api.nvim_buf_call(bufnr, function()
+						vim.cmd("silent write")
+					end)
+				end
+				formatting_bufs[bufnr] = nil
+			end
+
+			for _, client in ipairs(clients) do
+				client:request("textDocument/formatting", vim.lsp.util.make_formatting_params(), function(err, result)
+					if not err and result and vim.api.nvim_buf_is_valid(bufnr) then
+						vim.lsp.util.apply_text_edits(result, bufnr, client.offset_encoding)
+					end
+					vim.schedule(finish)
+				end, bufnr)
 			end
 		end,
 	})

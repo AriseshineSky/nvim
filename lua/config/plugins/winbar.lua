@@ -26,6 +26,22 @@ return {
 		end
 
 		require("dropbar").setup({
+			bar = {
+				--- dropbar 默认把 `TextChanged` 列为 winbar 更新事件，于是每次敲键
+				--- 都会重新请求 `textDocument/documentSymbol` 并取消上一个请求。
+				--- ruby-lsp 等响应稍慢的服务器因此被持续轰炸，lsp.log 里刷出
+				--- 大量 "Cannot find request ... whilst attempting to cancel"
+				--- （历史积累 18 万条 / 34MB）。这里去掉 `TextChanged`，
+				--- 只在缓冲区修改状态变化 / 模式切换 / 外部改动时刷新符号，
+				--- 光标移动仍会重绘 winbar（用缓存符号，不发新请求）。
+				update_events = {
+					buf = {
+						{ event = "OptionSet", pattern = "modified" },
+						"FileChangedShellPost",
+						"ModeChanged",
+					},
+				},
+			},
 			menu = {
 				-- When on, automatically set the cursor to the closest previous/next
 				-- clickable component in the direction of cursor movement on CursorMoved
