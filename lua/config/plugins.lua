@@ -43,6 +43,7 @@ require("lazy").setup({
 	require("config.plugins.lspconfig").config,
 	require("config.plugins.mason"),
 	require("config.plugins.treesitter"),
+	require("config.plugins.dap"),
 	require("config.plugins.comment"),
 	require("config.plugins.surround"),
 	require("config.plugins.project"),

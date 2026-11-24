@@ -35,21 +35,75 @@ local function show_documentation()
 	})
 end
 
+--- vim.lsp.buf.definition() and friends build their list from every location returned by every
+--- client, without de-duplication. When a server reports the same target twice (Ruby LSP does
+--- when its index holds two URIs for one file, e.g. one with a doubled slash - see
+--- lsp/ruby-lsp.lua), `gd` shows two identical entries. Normalize filenames (so "a//b" and "a/b"
+--- resolve to the same buffer) and drop duplicates.
+--- @param items vim.quickfix.entry[]
+--- @return vim.quickfix.entry[]
+local function dedupe_locations(items)
+	local seen, unique = {}, {}
+	for _, item in ipairs(items) do
+		local filename = item.filename and vim.fs.normalize(item.filename) or item.filename
+		local key = string.format("%s:%d:%d", filename or "", item.lnum or 0, item.col or 0)
+		if not seen[key] then
+			seen[key] = true
+			local copy = vim.deepcopy(item)
+			copy.filename = filename
+			unique[#unique + 1] = copy
+		end
+	end
+	return unique
+end
+
+--- Mirrors the default behaviour: jump straight to the only remaining location, otherwise list them.
+local function on_locations(list)
+	local items = dedupe_locations(list.items or {})
+	if #items == 1 then
+		local item = items[1]
+		local bufnr = item.bufnr or vim.fn.bufadd(item.filename)
+		vim.cmd("normal! m'")
+		vim.bo[bufnr].buflisted = true
+		vim.api.nvim_win_set_buf(0, bufnr)
+		vim.api.nvim_win_set_cursor(0, { item.lnum, math.max((item.col or 1) - 1, 0) })
+		vim.cmd("normal! zv")
+		return
+	end
+	vim.fn.setqflist({}, " ", { title = list.title or "LSP locations", items = items })
+	vim.cmd("botright copen")
+end
+
+--- References always stay a list, they are just de-duplicated.
+local function on_references(list)
+	local items = dedupe_locations(list.items or {})
+	vim.fn.setqflist({}, " ", { title = list.title or "LSP references", items = items })
+	vim.cmd("botright copen")
+end
+
 local function configure_keybinds()
 	vim.api.nvim_create_autocmd("LspAttach", {
 		desc = "LSP actions",
 		callback = function(event)
 			local opts = { buffer = event.buf, noremap = true, nowait = true }
 
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+			vim.keymap.set("n", "gd", function()
+				vim.lsp.buf.definition({ on_list = on_locations })
+			end, opts)
 			vim.keymap.set("n", "gD", function()
 				vim.cmd.tabnew()
-				vim.lsp.buf.definition()
+				vim.lsp.buf.definition({ on_list = on_locations })
 			end, opts)
 			vim.keymap.set("n", "<leader>h", show_documentation, opts)
-			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-			vim.keymap.set("n", "go", vim.lsp.buf.type_definition, opts)
-			vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+			vim.keymap.set("n", "gi", function()
+				vim.lsp.buf.implementation({ on_list = on_locations })
+			end, opts)
+			vim.keymap.set("n", "go", function()
+				vim.lsp.buf.type_definition({ on_list = on_locations })
+			end, opts)
+			vim.keymap.set("n", "gr", function()
+				vim.lsp.buf.references(nil, { on_list = on_references })
+			end, opts)
 			-- 插入模式签名帮助改由 blink.cmp 处理（只显示参数行，不含长文档）
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 			vim.keymap.set("n", "<leader>aw", vim.lsp.buf.code_action, opts)
